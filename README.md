@@ -1,9 +1,20 @@
 
 
 
-# Netgsm Sesli Mesaj Laravel Paketi
+# Laravel Netgsm Voice Mail Entegrasyonu
 
 Netgsm sesli mesaj paket aboneliği bulunan kullanıcılarımız için laravel paketidir.
+
+# İletişim & Destek
+
+ Netgsm API Servisi ile alakalı tüm sorularınızı ve önerilerinizi teknikdestek@netgsm.com.tr adresine iletebilirsiniz.
+
+
+# Doküman 
+https://www.netgsm.com.tr/dokuman/
+ API Servisi için hazırlanmış kapsamlı dokümana ve farklı yazılım dillerinde örnek amaçlı hazırlanmış örnek kodlamalara 
+ [https://www.netgsm.com.tr/dokuman](https://www.netgsm.com.tr/dokuman) adresinden ulaşabilirsiniz.
+
 
 ### Supported Laravel Versions
 
@@ -15,7 +26,7 @@ PHP 7.2.5 ve üzeri
 
 ### Kurulum
 
-composer require netgsm/voicesms  
+<b>composer require netgsm/voicemail<b/>  
 
 .env  dosyası içerisinde NETGSM ABONELİK bilgileriniz tanımlanması zorunludur.  
 
@@ -31,14 +42,29 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
 ```
        use Netgsm\Seslimesaj\Package;
        
-       $ses=new Package;
+       $islem=new Package;
        $data['fname']="C:/test.mp3";
-       $sonuc=$ses->sesyukle($data);
+       $sonuc=$islem->sesyukle($data);
        echo '<pre>';
             print_r($sonuc);
        echo '<pre>';
 ```
+#### Başarılı istek örnek
+```
+Array
+(
+    [durum] => İşlem başarılı
+    [sesid] => 5590xxxx
+)
+```
+#### Başarısız istek örnek
 
+```
+Array
+(
+    [durum] => Dosya yolu geçersiz.
+)
+```
 
 ### Ses Dosyası Listeleme
 
@@ -49,11 +75,49 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
        
        $data['startdate']='260120231500';
         $data['stopdate']='270120231500';
-        $ses=new Package;
-        $sonuc=$ses->seslistele($data);
+        $islem=new Package;
+        $sonuc=$islem->seslistele($data);
         echo '<pre>';
              print_r($sonuc);
         echo '<pre>';
+```
+####  Başarılı istek
+
+```
+Array
+(
+    [0] => Array
+        (
+            [AudioID] => 552xxxxx
+            [gonderentelno] => 312xxxxxxx
+            [tarih] => 26.01.2023 15:03
+            [mesajsuresi] => 174
+            [yuklenmisdosya] => http://sesdosya.netgsm.com.tr/upload.php?tip=6&a=b454xxxxxxxx.........
+        )
+
+    [1] => Array
+        (
+            [AudioID] => 55258936
+            [gonderentelno] => 312xxxxxxx
+            [tarih] => 26.01.2023 15:02
+            [mesajsuresi] => 174
+            [yuklenmisdosya] => http://sesdosya.netgsm.com.tr/upload.php?tip=6&a=b454axxxxxxxxxxx........
+        )
+
+)
+
+```
+
+####  Başarısız istek
+```
+Array
+(
+    [code] => 30
+    [message] => Geçersiz kullanıcı adı , şifre veya kullanıcınızın API erişim izninin olmadığını gösterir.  
+    Ayrıca eğer API erişiminizde IP sınırlaması yaptıysanız ve sınırladığınız ip dışında gönderim sağlıyorsanız  
+    30 hata kodunu alırsınız. API erişim izninizi veya IP sınırlamanızı , web arayüzümüzden; sağ üst köşede  
+    bulunan ayarlar> API işlemleri menüsunden kontrol edebilirsiniz.
+)
 ```
 
 ### Sesli Mesaj Başlatma
@@ -149,29 +213,45 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $data['startdate']="02022023";
-        $data['starttime']="1430";
-        $data['stopdate']="02022023";
-        $data['stoptime']="1530";
+        $data['startdate']="06022023";
+        $data['starttime']="1606";
+        $data['stopdate']="05022023";
+        $data['stoptime']="1630";
         $data['key']=1;
         $data['relationid']='1234567';
-        //$data['baslangicaudioid']=54325324;
-        $data['baslangictext']='Merhaba';
+        //$data['baslangicaudioid']=54325324;//baslangicaudioid varsa baslangictext parametresi gönderilmemelidir
+        $data['baslangictext']='Merhaba';//baslangictext varsa baslangicaudioid parametresi gönderilmemelidir
         $data['keyinfo'][0]['tus']=1;
         $data['keyinfo'][0]['ses']="55156219";
         $data['keyinfo'][1]['tus']=2;
-       // $data['keyinfo'][1]['ses']="55156219";
-        $data['keyinfo'][1]['text']="Merhaba ";
+       // $data['keyinfo'][1]['ses']="55156219";//text varsa ses parametresini gönderilmemelidir.
+        $data['keyinfo'][1]['text']="Merhaba ";//text varsa ses parametresi gönderilmemeilidir.
         $data['no']=['553xxxxxx'];
         $data['filter']=0;
         $data['ringtime']=20;
-        $ses=new Package;
-        $sonuc=$ses->basitSesliMsg($data);
+        $islem=new Package;
+        $sonuc=$islem->basitSesliMsg($data);
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
 ```
-
+#### Başarılı istek örnek
+```
+Array
+(
+    [cevap] => İşlem başarılı.
+    [code] => 00
+    [bulkid] => 175343083
+)
+```
+#### Başarısız istek örnek
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
+```
 ### Dinamik Sesli Mesaj Başlatma
 
 Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dosyaları ya da textlerinizle sesli mesajınız başlatılır. 1:n mantığı ile bir sesli mesajı birden fazla numaraya başlatabilirsiniz.
@@ -239,7 +319,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $ses=new Package;
+        $islem=new Package;
         $data['startdate']="02022023";
         $data['starttime']="0914";
         $data['stopdate']="02022023";
@@ -257,11 +337,28 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";
         $data['keyinfo'][1]['text']="Merhaba ";//$data['keyinfo'][1] in tus keyinin valuesi 2 olduğu için 2 ye tıklandığında sesli mesaja çevrilecek metini ifade eder.burada audioid de kullanılabilir.
-        $sonuc=$ses->dinamikseslimesaj($data);
+        $sonuc=$islem->dinamikseslimesaj($data);
        
         echo '<pre>';
             print_r($sonuc);
        echo '<pre>';
+```
+#### Başarılı istek örnek sonuç
+```
+Array
+(
+    [code] => 00
+    [bulkid] => 175345216
+    [durum] => işlem başarılı
+)
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
 ```
 ### Sesli Mesaj İptali
 
@@ -272,54 +369,116 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=173750122;
-        $ses=new Package;
-        $sonuc=$ses->iptal($data);
+        $data['bulkid']=175345879;
+        $islem=new Package;
+        $sonuc=$islem->iptal($data);
         
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
 ```
+#### Başarılı istek örnek sonuç
+```
+
+
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 40
+    [error] => ileri tarihli bulkid bulunamadi
+)
+```
 ### Sesli Mesaj ,Raporlama
 
 HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tarafınıza dönen ID bilgisi bulkid ile göndereceğiniz ya da bastar- bittar parametreleri gibi sesli mesajlarınızı yaptığınız zaman aralığına göre sorgulayabilirsiniz.
 
+<table>
+<thead>
+<tr>
+<th>Değişken</th>
+<th>Anlamı</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>bulkid</code></td>
+<td>Api ile başarılı sesli mesaj gönderimlerinizde dönen görevid(bulkid) nizdir.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Sorgulama tipini belirlemek için kullanılır.0: Tek bulkid'ye göre sorgulama yapar. 1: Birden çok bulkid'ye göre sorgulama yapar. (Not: Bu durumda bulkid parametresi 43234, 53453, 54332, ....gibi yazılır.) 2: Tarih aralığında sorgu yapabilmek için kullanılır. (Not: Parametrenin bu değerinde bulkid parametresine girilen değer dikkate alınmaz.)</td>
+</tr>
+<tr>
+<td><code>bastar</code></td>
+<td>İki tarih arası sorgulamanızda başlangıç tarihi (ddMMyyyyHHmm)</td>
+</tr>
+<tr>
+<td><code>bittar</code></td>
+<td>İki tarih arası sorgulamanızda bitiş tarihi(ddMMyyyyHHmm)</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Mesajınızın durumunu sorgulamak için kullanılır. Status parametesi için açıklamaları aşağıdaki tabloda bulabilirsiniz.</td>
+</tr>
+<tr>
+<td><code>tus</code></td>
+<td>Arama yapıldığında komut edilen tuş numarası. Tuşlanan rakam eğer 10 şeklinde gönderilirse hiç bir tuşa basmayanlar listelenir.</td>
+</tr>
+
+</tbody>
+</table>
 
 ```
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=171035263;
-        $data['bastar']='';
-        $data['bittar']='';
-        $data['status']=0;
-        $data['tus']=10;
-        $data['status']=0;
+        $data['bulkid']="1712315"
+        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
+       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
+        $data['type']='2';
+        $data['status']=1;
+        $data['tus']='1';
         $ses=new Package;
         $sonuc=$ses->rapor($data);
        
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
+    
 ```
-<table width="300">
-  <th>Parametre</th>
-  <th>Anlamı</th>
-  <tr>
-    <td><b> bulkid</b> </td>
-    <td> Api ile başarılı sesli mesaj gönderimlerinizde dönen görevid(bulkid) nizdir. (ddMMyyyy)
- </td>
- </tr>
- 
- <tr>
-    <td><b> status</b> </td>
-    <td> Mesajınızın durumunu sorgulamak için kullanılır. Status parametesi için açıklamaları aşağıdaki tabloda bulabilirsiniz.
- </td>
- </tr>
- <tr>
-    <td><b> tus</b> </td>
-    <td> 	Arama yapıldığında komut edilen tuş numarası. Tuşlanan rakam eğer 10 şeklinde gönderilirse hiç bir tuşa basmayanlar listelenir.
- </td>
- </tr>
+
+#### Başarılı istek örnek sonuç
+```
+Array
+(
+    [0] => Array
+        (
+            [bulkid] => 1
+            [numara] => 7
+            [cagricevapdurumu] => 5
+            [tuslananrakam] => 3
+        )
+
+    [1] => Array
+        (
+            [bulkid] => 1
+            [numara] => 7
+            [cagricevapdurumu] => 5
+            [tuslananrakam] => 3
+        )
+ )
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
+```
+
 
     
   
