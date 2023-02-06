@@ -49,7 +49,22 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
             print_r($sonuc);
        echo '<pre>';
 ```
+#### Başarılı istek örnek
+```
+Array
+(
+    [durum] => İşlem başarılı
+    [sesid] => 5590xxxx
+)
+```
+#### Başarısız istek örnek
 
+```
+Array
+(
+    [durum] => Dosya yolu geçersiz.
+)
+```
 
 ### Ses Dosyası Listeleme
 
@@ -66,6 +81,8 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
              print_r($sonuc);
         echo '<pre>';
 ```
+
+
 
 ### Sesli Mesaj Başlatma
 
