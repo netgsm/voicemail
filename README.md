@@ -394,16 +394,55 @@ Array
 
 HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tarafınıza dönen ID bilgisi bulkid ile göndereceğiniz ya da bastar- bittar parametreleri gibi sesli mesajlarınızı yaptığınız zaman aralığına göre sorgulayabilirsiniz.
 
+<table>
+<thead>
+<tr>
+<th>Değişken</th>
+<th>Anlamı</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>bulkid</code></td>
+<td>Api ile başarılı sesli mesaj gönderimlerinizde dönen görevid(bulkid) nizdir.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Sorgulama tipini belirlemek için kullanılır.0: Tek bulkid'ye göre sorgulama yapar. 1: Birden çok bulkid'ye göre sorgulama yapar. (Not: Bu durumda bulkid parametresi 43234, 53453, 54332, ....gibi yazılır.) 2: Tarih aralığında sorgu yapabilmek için kullanılır. (Not: Parametrenin bu değerinde bulkid parametresine girilen değer dikkate alınmaz.)</td>
+</tr>
+<tr>
+<td><code>bastar</code></td>
+<td>İki tarih arası sorgulamanızda başlangıç tarihi (ddMMyyyyHHmm)</td>
+</tr>
+<tr>
+<td><code>bittar</code></td>
+<td>İki tarih arası sorgulamanızda bitiş tarihi(ddMMyyyyHHmm)</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Mesajınızın durumunu sorgulamak için kullanılır. Status parametesi için açıklamaları aşağıdaki tabloda bulabilirsiniz.</td>
+</tr>
+<tr>
+<td><code>tus</code></td>
+<td>Arama yapıldığında komut edilen tuş numarası. Tuşlanan rakam eğer 10 şeklinde gönderilirse hiç bir tuşa basmayanlar listelenir.</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>1: Birden çok bulkid'ye göre sorgulama yapıldığında kullanılır.</td>
+</tr>
+</tbody>
+</table>
 
 ```
        
         use Netgsm\Seslimesaj\Package;
         $data['bulkid']=171035263;
-        $data['bastar']='';
-        $data['bittar']='';
+        //$data['bastar']='';
+        ///$data['bittar']='';
         $data['status']=0;
         $data['tus']=10;
-        $data['status']=0;
+        $data['type']=0;
         $ses=new Package;
         $sonuc=$ses->rapor($data);
        
@@ -416,11 +455,22 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```
 Array
 (
-    [bulkid] => 175351999
-    [numara] => 90553xxxxxxx
-    [cagricevapdurumu] => 1
-    [tuslananrakam] => 5
-)
+    [0] => Array
+        (
+            [bulkid] => 1
+            [numara] => 7
+            [cagricevapdurumu] => 5
+            [tuslananrakam] => 3
+        )
+
+    [1] => Array
+        (
+            [bulkid] => 1
+            [numara] => 7
+            [cagricevapdurumu] => 5
+            [tuslananrakam] => 3
+        )
+ )
 ```
 #### Başarısız istek örnek sonuç
 ```
@@ -430,25 +480,7 @@ Array
     [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
 )
 ```
-<table width="300">
-  <th>Parametre</th>
-  <th>Anlamı</th>
-  <tr>
-    <td><b> bulkid</b> </td>
-    <td> Api ile başarılı sesli mesaj gönderimlerinizde dönen görevid(bulkid) nizdir. (ddMMyyyy)
- </td>
- </tr>
- 
- <tr>
-    <td><b> status</b> </td>
-    <td> Mesajınızın durumunu sorgulamak için kullanılır. Status parametesi için açıklamaları aşağıdaki tabloda bulabilirsiniz.
- </td>
- </tr>
- <tr>
-    <td><b> tus</b> </td>
-    <td> 	Arama yapıldığında komut edilen tuş numarası. Tuşlanan rakam eğer 10 şeklinde gönderilirse hiç bir tuşa basmayanlar listelenir.
- </td>
- </tr>
+
 
     
   
