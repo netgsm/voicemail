@@ -42,9 +42,9 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
 ```
        use Netgsm\Seslimesaj\Package;
        
-       $ses=new Package;
+       $islem=new Package;
        $data['fname']="C:/test.mp3";
-       $sonuc=$ses->sesyukle($data);
+       $sonuc=$islem->sesyukle($data);
        echo '<pre>';
             print_r($sonuc);
        echo '<pre>';
@@ -75,8 +75,8 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
        
        $data['startdate']='260120231500';
         $data['stopdate']='270120231500';
-        $ses=new Package;
-        $sonuc=$ses->seslistele($data);
+        $islem=new Package;
+        $sonuc=$islem->seslistele($data);
         echo '<pre>';
              print_r($sonuc);
         echo '<pre>';
@@ -213,29 +213,45 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $data['startdate']="02022023";
-        $data['starttime']="1430";
-        $data['stopdate']="02022023";
-        $data['stoptime']="1530";
+        $data['startdate']="06022023";
+        $data['starttime']="1606";
+        $data['stopdate']="05022023";
+        $data['stoptime']="1630";
         $data['key']=1;
         $data['relationid']='1234567';
-        //$data['baslangicaudioid']=54325324;
-        $data['baslangictext']='Merhaba';
+        //$data['baslangicaudioid']=54325324;//baslangicaudioid varsa baslangictext parametresi gönderilmemelidir
+        $data['baslangictext']='Merhaba';//baslangictext varsa baslangicaudioid parametresi gönderilmemelidir
         $data['keyinfo'][0]['tus']=1;
         $data['keyinfo'][0]['ses']="55156219";
         $data['keyinfo'][1]['tus']=2;
-       // $data['keyinfo'][1]['ses']="55156219";
-        $data['keyinfo'][1]['text']="Merhaba ";
+       // $data['keyinfo'][1]['ses']="55156219";//text varsa ses parametresini gönderilmemelidir.
+        $data['keyinfo'][1]['text']="Merhaba ";//text varsa ses parametresi gönderilmemeilidir.
         $data['no']=['553xxxxxx'];
         $data['filter']=0;
         $data['ringtime']=20;
-        $ses=new Package;
-        $sonuc=$ses->basitSesliMsg($data);
+        $islem=new Package;
+        $sonuc=$islem->basitSesliMsg($data);
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
 ```
-
+#### Başarılı istek örnek
+```
+Array
+(
+    [cevap] => İşlem başarılı.
+    [code] => 00
+    [bulkid] => 175343083
+)
+```
+#### Başarısız istek örnek
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
+```
 ### Dinamik Sesli Mesaj Başlatma
 
 Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dosyaları ya da textlerinizle sesli mesajınız başlatılır. 1:n mantığı ile bir sesli mesajı birden fazla numaraya başlatabilirsiniz.
@@ -303,7 +319,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $ses=new Package;
+        $islem=new Package;
         $data['startdate']="02022023";
         $data['starttime']="0914";
         $data['stopdate']="02022023";
@@ -321,11 +337,28 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";
         $data['keyinfo'][1]['text']="Merhaba ";//$data['keyinfo'][1] in tus keyinin valuesi 2 olduğu için 2 ye tıklandığında sesli mesaja çevrilecek metini ifade eder.burada audioid de kullanılabilir.
-        $sonuc=$ses->dinamikseslimesaj($data);
+        $sonuc=$islem->dinamikseslimesaj($data);
        
         echo '<pre>';
             print_r($sonuc);
        echo '<pre>';
+```
+#### Başarılı istek örnek sonuç
+```
+Array
+(
+    [code] => 00
+    [bulkid] => 175345216
+    [durum] => işlem başarılı
+)
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
 ```
 ### Sesli Mesaj İptali
 
@@ -336,13 +369,26 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
 
 ```
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=173750122;
-        $ses=new Package;
-        $sonuc=$ses->iptal($data);
+        $data['bulkid']=175345879;
+        $islem=new Package;
+        $sonuc=$islem->iptal($data);
         
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
+```
+#### Başarılı istek örnek sonuç
+```
+
+
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 40
+    [error] => ileri tarihli bulkid bulunamadi
+)
 ```
 ### Sesli Mesaj ,Raporlama
 
@@ -364,6 +410,25 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
+```
+
+#### Başarılı istek örnek sonuç
+```
+Array
+(
+    [bulkid] => 175351999
+    [numara] => 90553xxxxxxx
+    [cagricevapdurumu] => 1
+    [tuslananrakam] => 5
+)
+```
+#### Başarısız istek örnek sonuç
+```
+Array
+(
+    [code] => 70
+    [durum] => Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.
+)
 ```
 <table width="300">
   <th>Parametre</th>
