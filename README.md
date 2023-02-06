@@ -81,8 +81,44 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
              print_r($sonuc);
         echo '<pre>';
 ```
+####  Başarılı istek
 
+```
+Array
+(
+    [0] => Array
+        (
+            [AudioID] => 552xxxxx
+            [gonderentelno] => 312xxxxxxx
+            [tarih] => 26.01.2023 15:03
+            [mesajsuresi] => 174
+            [yuklenmisdosya] => http://sesdosya.netgsm.com.tr/upload.php?tip=6&a=b454xxxxxxxx.........
+        )
 
+    [1] => Array
+        (
+            [AudioID] => 55258936
+            [gonderentelno] => 312xxxxxxx
+            [tarih] => 26.01.2023 15:02
+            [mesajsuresi] => 174
+            [yuklenmisdosya] => http://sesdosya.netgsm.com.tr/upload.php?tip=6&a=b454axxxxxxxxxxx........
+        )
+
+)
+
+```
+
+####  Başarısız istek
+```
+Array
+(
+    [code] => 30
+    [message] => Geçersiz kullanıcı adı , şifre veya kullanıcınızın API erişim izninin olmadığını gösterir.  
+    Ayrıca eğer API erişiminizde IP sınırlaması yaptıysanız ve sınırladığınız ip dışında gönderim sağlıyorsanız  
+    30 hata kodunu alırsınız. API erişim izninizi veya IP sınırlamanızı , web arayüzümüzden; sağ üst köşede  
+    bulunan ayarlar> API işlemleri menüsunden kontrol edebilirsiniz.
+)
+```
 
 ### Sesli Mesaj Başlatma
 
