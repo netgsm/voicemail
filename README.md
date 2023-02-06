@@ -427,28 +427,26 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 <td><code>tus</code></td>
 <td>Arama yapıldığında komut edilen tuş numarası. Tuşlanan rakam eğer 10 şeklinde gönderilirse hiç bir tuşa basmayanlar listelenir.</td>
 </tr>
-<tr>
-<td><code>version</code></td>
-<td>1: Birden çok bulkid'ye göre sorgulama yapıldığında kullanılır.</td>
-</tr>
+
 </tbody>
 </table>
 
 ```
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=171035263;
-        //$data['bastar']='';
-        ///$data['bittar']='';
-        $data['status']=0;
-        $data['tus']=10;
-        $data['type']=0;
+        $data['bulkid']="1712315"
+        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
+       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
+        $data['type']='2';
+        $data['status']=1;
+        $data['tus']='1';
         $ses=new Package;
         $sonuc=$ses->rapor($data);
        
         echo '<pre>';
             print_r($sonuc);
         echo '<pre>';
+    
 ```
 
 #### Başarılı istek örnek sonuç
