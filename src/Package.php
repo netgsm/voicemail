@@ -91,7 +91,13 @@ class Package
             $stopdate=$data['stopdate'];
         }
 
-        
+        $sonuc=array(
+            "30"=>"Geçersiz kullanıcı adı , şifre veya kullanıcınızın API erişim izninin olmadığını gösterir.Ayrıca eğer API erişiminizde IP sınırlaması yaptıysanız ve sınırladığınız ip dışında gönderim sağlıyorsanız 30 hata kodunu alırsınız. API erişim izninizi veya IP sınırlamanızı , web arayüzümüzden; sağ üst köşede bulunan ayarlar> API işlemleri menüsunden kontrol edebilirsiniz.",
+            "40"=>"Arama kriterlerinize göre listelenecek kayıt olmadığını ifade eder.",
+            "50"=>"Arama kriterlerindeki tarih formatının hatalı olduğunu ifade eder. (ddMMyyyyHHmm)",
+            "60"=>"Arama kiterlerindeki startdate ve stopdate zaman farkının 30 günden fazla olduğunu ifade eder.",
+            "70"=>"Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder."
+        );
       $xmlData='<?xml version="1.0"?>
      <mainbody>
        <header>
@@ -112,6 +118,7 @@ class Package
 		$result = curl_exec($ch);
         
         $dz=array_filter(explode("<br>",$result));
+        
         if(count($dz)>1){
             $sesDz=array();
             foreach($dz as $d=>$v){
@@ -123,6 +130,11 @@ class Package
                 $response[$d]['yuklenmisdosya']=trim($sesDz[4]);
 
             }
+        }
+        elseif($dz[0]==30 || $dz[0]==40 || $dz[0]==50 ||$dz[0]==60 || $dz[0]==70  )
+        {
+            $response['code']=$dz[0];
+            $response['message']=$sonuc[$dz[0]];
         }
         else{
             $response['durum']="Sonuç bulunamadı";
@@ -368,12 +380,18 @@ class Package
         }
         if(!isset($data["bulkid"]))
         {
-            $res['cevap']='bulkid giriniz...';
-            return $res;
+            $data["bulkid"]=null;
         }
-
-        $url= "https://api.netgsm.com.tr/voicesms/report/?usercode=".$username."&password=".$password."&bulkid=".$data['bulkid']."&type=0&status=".$data['status']."&tus=".$data['tus'];
-
+        if(!isset($data["type"]))
+        {
+            $data["type"]=0;
+        }
+        if(isset($bulkid))
+        {
+            
+        }
+        $url= "https://api.netgsm.com.tr/voicesms/report/?usercode=".$username."&password=".$password."&bulkid=".$data['bulkid']."&type=".$data['type']."&status=".$data['status']."&tus=".$data['tus']."&bastar=".$data['bastar']."&bittar=".$data['bittar'];
+        
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -389,35 +407,41 @@ class Package
 
 
         
-       $dz=array_values(array_filter(explode(" ",$balanceInfo)));
+       $dz=array_values(array_filter(explode("<br>",$balanceInfo)));
        
-
+        
        $sonuc=array(
             30=>"Geçersiz kullanıcı adı , şifre veya kullanıcınızın API erişim izninin olmadığını gösterir. Ayrıca eğer API erişiminizde IP sınırlaması yaptıysanız ve sınırladığınız ip dışında gönderim sağlıyorsanız 30 hata kodunu alırsınız. API erişim izninizi veya IP sınırlamanızı , web arayüzümüzden; sağ üst köşede bulunan ayarlar> API işlemleri menüsunden kontrol edebilirsiniz.",
             60=>"Arama kriterlerinize göre listelenecek kayıt olmadığını ifade eder.",
             80=>"Sorgulama sınır aşımını ifade eder, dakikada 2 kez sorgulanabilir.",
+            70=>"Hatalı sorgulama. Gönderdiğiniz parametrelerden birisi hatalı veya zorunlu alanlardan birinin eksik olduğunu ifade eder.",
             100=>"Sistem hatası"
 
        );
-
-      
-       if($dz[0]==30|| $dz[0]==60|| $dz[0]==80|| $dz[0]==100 )
+       
+       
+       if($dz[0]==30|| $dz[0]==60|| $dz[0]==70|| $dz[0]==80|| $dz[0]==100 )
        {
-
-        $res["code"]=$dz[0];
-        $res['durum']=$sonuc[$dz[0]];
+        
+        $response["code"]=$dz[0];
+        $response['durum']=$sonuc[$dz[0]];
 
        }
 
        else{
 
-
-            $response['bulkid']=$dz[0];
-            $response['numara']=$dz[1];
-            $response['cagricevapdurumu']=$dz[2];
-            $response['tuslananrakam']=$dz[3];
+        foreach($dz as $key=>$value){
+            $dz2=array_values(array_filter(explode(" ",$value)));
+           
+            $response[$key]['bulkid']=$value[0];
+            $response[$key]['numara']=$value[1];
+            $response[$key]['cagricevapdurumu']=$value[2];
+            $response[$key]['tuslananrakam']=$value[3];
+        }
+            
 
        }
+       
        return $response;
 
 
