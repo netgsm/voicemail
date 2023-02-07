@@ -379,7 +379,12 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
 ```
 #### Başarılı istek örnek sonuç
 ```
-
+Array
+(
+    [code] => 200
+    [message] => bulkid iptal islemine alindi.
+    [bulkid] => 175577803
+)
 
 ```
 #### Başarısız istek örnek sonuç
