@@ -379,7 +379,12 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
 ```
 #### Başarılı istek örnek sonuç
 ```
-
+Array
+(
+    [code] => 200
+    [message] => bulkid iptal islemine alindi.
+    [bulkid] => 175577803
+)
 
 ```
 #### Başarısız istek örnek sonuç
@@ -434,7 +439,7 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']="1712315"
+        $data['bulkid']="1712315";
         // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
        //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
         $data['type']='2';
