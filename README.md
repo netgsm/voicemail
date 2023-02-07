@@ -439,7 +439,7 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']="1712315"
+        $data['bulkid']="1712315";
         // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
        //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
         $data['type']='2';
