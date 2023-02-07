@@ -386,10 +386,15 @@ class Package
         {
             $data["type"]=0;
         }
-        if(isset($bulkid))
+        if(!isset($data["bastar"]))
         {
-            
+            $data['bastar']=null;
         }
+        if(!isset($data["bittar"]))
+        {
+            $data['bittar']=null;
+        }
+        
         $url= "https://api.netgsm.com.tr/voicesms/report/?usercode=".$username."&password=".$password."&bulkid=".$data['bulkid']."&type=".$data['type']."&status=".$data['status']."&tus=".$data['tus']."&bastar=".$data['bastar']."&bittar=".$data['bittar'];
         
         $ch = curl_init($url);
@@ -431,12 +436,21 @@ class Package
        else{
 
         foreach($dz as $key=>$value){
+            
             $dz2=array_values(array_filter(explode(" ",$value)));
-           
-            $response[$key]['bulkid']=$value[0];
-            $response[$key]['numara']=$value[1];
-            $response[$key]['cagricevapdurumu']=$value[2];
-            $response[$key]['tuslananrakam']=$value[3];
+            
+            $response[$key]['bulkid']=$dz2[0];
+            $response[$key]['numara']=$dz2[1];
+            $response[$key]['cagricevapdurumu']=$dz2[2];
+            if(isset($dz2[3]))
+            {
+                $response[$key]['tuslananrakam']=$dz2[3];
+            }
+            else
+            {
+                $response[$key]['tuslananrakam']='-';
+            }
+            
         }
             
 
