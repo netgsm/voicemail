@@ -10,13 +10,28 @@ use SimpleXMLElement;
 class Package
 {
 
-
+    private $username;
+    private $password;
+    public function __construct()
+    {
+     if(isset($_ENV['NETGSM_USERCODE']))
+      {
+          $this->username=$_ENV['NETGSM_USERCODE'];
+      }
+      else{
+          $this->username='x';
+      }
+      if(isset($_ENV['NETGSM_PASSWORD']))
+      {
+          $this->password=$_ENV['NETGSM_PASSWORD'];
+      }
+      else{
+          $this->password='x';
+      }
+        
+    }
     public function sesyukle($data):array
     {
-
-
-        $username=env("NETGSM_USERCODE");
-        $password=env("NETGSM_PASSWORD");
 
         $target_url ="https://api.netgsm.com.tr/voicesms/upload";
         $fname = $data['fname'];	// dosya yolunu belirtin.
@@ -31,8 +46,8 @@ class Package
 
         $post = array (
                   'dosya' => $cfile,
-                  'username' => $username,
-                  'password' => $password
+                  'username' => $this->username,
+                  'password' => $this->password
                   );
 
         $ch = curl_init();
@@ -101,8 +116,8 @@ class Package
       $xmlData='<?xml version="1.0"?>
      <mainbody>
        <header>
-         <usercode>'.env("NETGSM_USERCODE").'</usercode>
-         <password>'.env("NETGSM_PASSWORD").'</password>
+         <usercode>'.$this->username.'</usercode>
+         <password>'.$this->password.'</password>
          <startdate>'.$startdate.'</startdate>
          <stopdate>'.$stopdate.'</stopdate>
        </header>
@@ -267,8 +282,8 @@ class Package
         $xmlData='<?xml version="1.0"?>
        <mainbody>
        <header>
-       <usercode>'.env("NETGSM_USERCODE").'</usercode>
-       <password>'.env("NETGSM_PASSWORD").'</password>
+       <usercode>'.$this->username.'</usercode>
+       <password>'.$this->password.'</password>
        <startdate>'.$data['startdate'].'</startdate>
        <starttime>'.$data['starttime'].'</starttime>
        <stopdate>'.$data['stopdate'].'</stopdate>
@@ -332,15 +347,14 @@ class Package
     }
     public function iptal($data)
     {
-        $username = env("NETGSM_USERCODE"); //
-        $password = urlencode(env("NETGSM_PASSWORD")); //
+       
         if(!isset($data['bulkid']) || empty($data['bulkid']))
         {
             $res['cevap']='bulkid giriniz...';
             return $res;
         }
 
-        $url= "https://api.netgsm.com.tr/voicesms/edit?usercode=".$username."&password=".$password."&bulkid=".$data['bulkid'];
+        $url= "https://api.netgsm.com.tr/voicesms/edit?usercode=".$this->username."&password=".$this->password."&bulkid=".$data['bulkid'];
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -363,8 +377,6 @@ class Package
     }
     public function rapor($data):array
     {
-        $username = env("NETGSM_USERCODE"); //
-        $password = urlencode(env("NETGSM_PASSWORD")); //
 
         if(!isset($data["tus"]))
         {
@@ -395,7 +407,7 @@ class Package
             $data['bittar']=null;
         }
         
-        $url= "https://api.netgsm.com.tr/voicesms/report/?usercode=".$username."&password=".$password."&bulkid=".$data['bulkid']."&type=".$data['type']."&status=".$data['status']."&tus=".$data['tus']."&bastar=".$data['bastar']."&bittar=".$data['bittar'];
+        $url= "https://api.netgsm.com.tr/voicesms/report/?usercode=".$this->username."&password=".$this->password."&bulkid=".$data['bulkid']."&type=".$data['type']."&status=".$data['status']."&tus=".$data['tus']."&bastar=".$data['bastar']."&bittar=".$data['bittar'];
         
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -567,8 +579,8 @@ class Package
         $xmlData="<?xml version='1.0' encoding='UTF-8'?>
             <mainbody>
             <header>
-                <usercode>".env("NETGSM_USERCODE")."</usercode>
-                <password>".env("NETGSM_PASSWORD")."</password>
+                <usercode>".$this->username."</usercode>
+                <password>".$this->password."</password>
                 <startdate>".$data['startdate']."</startdate>
                 <starttime>".$data['starttime']."</starttime>
                 <stopdate>".$data['stopdate']."</stopdate>
