@@ -438,9 +438,9 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
        
         use Netgsm\Seslimesaj\Package;
         $data['bulkid']="1712315";
-        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
-       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
-        $data['type']='2';
+        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
+       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
+        $data['type']='0';
         $data['status']=1;
         $data['tus']='1';
         $ses=new Package;
