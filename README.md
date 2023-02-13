@@ -20,6 +20,10 @@ https://www.netgsm.com.tr/dokuman/
 
 Laravel 6.x, Laravel 7.x, Laravel 8.x, Laravel 9.x, 
 
+### Supported Symfony Versions
+
+Symfony 4.x, Symfony 5.x, Symfony 6.x
+
 ### Supported Php Versions
 
 PHP 7.2.5 ve üzeri
@@ -45,9 +49,8 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
        $islem=new Package;
        $data['fname']="C:/test.mp3";
        $sonuc=$islem->sesyukle($data);
-       echo '<pre>';
-            print_r($sonuc);
-       echo '<pre>';
+       dd($sonuc);
+       die;
 ```
 #### Başarılı istek örnek
 ```
@@ -71,15 +74,14 @@ Array
 Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
 
 ```
-       use Netgsm\Seslimesaj\Package;
+        use Netgsm\Seslimesaj\Package;
        
-       $data['startdate']='260120231500';
+        $data['startdate']='260120231500';
         $data['stopdate']='270120231500';
         $islem=new Package;
         $sonuc=$islem->seslistele($data);
-        echo '<pre>';
-             print_r($sonuc);
-        echo '<pre>';
+        dd($sonuc);
+        die;
 ```
 ####  Başarılı istek
 
@@ -231,9 +233,8 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
         $data['ringtime']=20;
         $islem=new Package;
         $sonuc=$islem->basitSesliMsg($data);
-        echo '<pre>';
-            print_r($sonuc);
-        echo '<pre>';
+        dd($sonuc);
+        die;
 ```
 #### Başarılı istek örnek
 ```
@@ -338,10 +339,8 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
        // $data['keyinfo'][1]['ses']="55156219";
         $data['keyinfo'][1]['text']="Merhaba ";//$data['keyinfo'][1] in tus keyinin valuesi 2 olduğu için 2 ye tıklandığında sesli mesaja çevrilecek metini ifade eder.burada audioid de kullanılabilir.
         $sonuc=$islem->dinamikseslimesaj($data);
-       
-        echo '<pre>';
-            print_r($sonuc);
-       echo '<pre>';
+       dd($sonuc);
+       die;
 ```
 #### Başarılı istek örnek sonuç
 ```
@@ -373,9 +372,8 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
         $islem=new Package;
         $sonuc=$islem->iptal($data);
         
-        echo '<pre>';
-            print_r($sonuc);
-        echo '<pre>';
+        dd($sonuc);
+        die;
 ```
 #### Başarılı istek örnek sonuç
 ```
@@ -440,17 +438,15 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
        
         use Netgsm\Seslimesaj\Package;
         $data['bulkid']="1712315";
-        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.
-       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.
-        $data['type']='2';
+        // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
+       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
+        $data['type']='0';
         $data['status']=1;
         $data['tus']='1';
         $ses=new Package;
         $sonuc=$ses->rapor($data);
-       
-        echo '<pre>';
-            print_r($sonuc);
-        echo '<pre>';
+        dd($sonuc);
+        die;
     
 ```
 
