@@ -24,6 +24,10 @@ Laravel 6.x, Laravel 7.x, Laravel 8.x, Laravel 9.x,
 
 Symfony 4.x, Symfony 5.x, Symfony 6.x
 
+### Supported Lumen Versions
+
+Lumen 6.x, Lumen 7.x, Lumen 8.x, Lumen 9.x, 
+
 ### Supported Php Versions
 
 PHP 7.2.5 ve üzeri
