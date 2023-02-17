@@ -63,7 +63,7 @@ Array
     [durum] => İşlem başarılı
     [sesid] => 5590xxxx
 )
-```php
+```
 #### Başarısız istek örnek
 
 ```php
