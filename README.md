@@ -75,7 +75,7 @@ Array
 
 ### Ses Dosyası Listeleme
 
-Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
+Yüklediğiniz ses dosyalarını sorgulayarak bilgisine ulaşabilirsiniz.
 
 ```php
         $data=array('startdate'=>'260120231500','stopdate'=>'270120231500');
