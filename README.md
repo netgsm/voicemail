@@ -443,12 +443,8 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```php
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']="1712xxxx";
+        $data=array('bulkid'=>'1712xxxx','bastar'=>'060220230000','bittar'=>'060220232000','type'=>'0','status'=>'1','tus'=>'1');
         // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
-       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
-        $data['type']='0';
-        $data['status']=1;
-        $data['tus']='1';
         $ses=new Package;
         $sonuc=$ses->rapor($data);
         dd($sonuc);
