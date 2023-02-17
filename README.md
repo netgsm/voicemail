@@ -192,7 +192,7 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
   </tr>
        <tr>
     <td><b> $data['keyinfo'][0][ses]  </b> </td>
-    <td>tuşa basılığında bu sesi dinlet anlamına gelir
+    <td>tuşa basılığında bu sesi dinlet anlamına gelir.Daha önceden yüklenmiş ses id si girilmelidir.
    </td>
   </tr>
        </tr>
