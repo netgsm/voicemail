@@ -225,8 +225,8 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
         $data['starttime']="1606";
         $data['stopdate']="05022023";
         $data['stoptime']="1630";
-        $data['key']=1;
-        $data['relationid']='1234567';
+        $data['key']=1;//ses kaydının sonunda tuşa basılması durumu (0,1)
+        $data['relationid']='1234567';//random olarak girilir
         //$data['baslangicaudioid']=54325324;//baslangicaudioid varsa baslangictext parametresi gönderilmemelidir
         $data['baslangictext']='Merhaba';//baslangictext varsa baslangicaudioid parametresi gönderilmemelidir
         $data['keyinfo'][0]['tus']=1;//1 numaralı tuşa basıldığında anlamına gelir
