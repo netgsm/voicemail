@@ -47,7 +47,7 @@ Sesli mesaj yapacağınız ses dosyasını bu fonksityon ile yükleyebilirsiniz.
 
 Bir dakika içerisinde bir dosya gönderebilirsiniz.
 
-```
+```php
        use Netgsm\Seslimesaj\Package;
        
        $islem=new Package;
@@ -57,16 +57,16 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
        die;
 ```
 #### Başarılı istek örnek
-```
+```php
 Array
 (
     [durum] => İşlem başarılı
     [sesid] => 5590xxxx
 )
-```
+```php
 #### Başarısız istek örnek
 
-```
+```php
 Array
 (
     [durum] => Dosya yolu geçersiz.
@@ -77,7 +77,7 @@ Array
 
 Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
        
         $data['startdate']='260120231500';
@@ -89,7 +89,7 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
 ```
 ####  Başarılı istek
 
-```
+```php
 Array
 (
     [0] => Array
@@ -217,7 +217,7 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
   
 </table>  
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
         $data['startdate']="06022023";
         $data['starttime']="1606";
@@ -241,7 +241,7 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
         die;
 ```
 #### Başarılı istek örnek
-```
+```php
 Array
 (
     [cevap] => İşlem başarılı.
@@ -250,7 +250,7 @@ Array
 )
 ```
 #### Başarısız istek örnek
-```
+```php
 Array
 (
     [code] => 70
@@ -322,7 +322,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
 </tbody>
 </table>
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
         $islem=new Package;
         $data['startdate']="02022023";
@@ -347,7 +347,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
        die;
 ```
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 00
@@ -356,7 +356,7 @@ Array
 )
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 70
@@ -370,9 +370,9 @@ Array
 bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen görevid(bulkid) nizdir. İstek yapılırken gönderilmesi zorunludur.
 
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=175345879;
+        $data['bulkid']=17xxxxx;
         $islem=new Package;
         $sonuc=$islem->iptal($data);
         
@@ -380,17 +380,17 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
         die;
 ```
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 200
     [message] => bulkid iptal islemine alindi.
-    [bulkid] => 175577803
+    [bulkid] => 175xxxx
 )
 
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 40
@@ -438,10 +438,10 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 </tbody>
 </table>
 
-```
+```php
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']="1712315";
+        $data['bulkid']="1712xxxx";
         // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
        //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
         $data['type']='0';
@@ -455,7 +455,7 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```
 
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [0] => Array
@@ -476,7 +476,7 @@ Array
  )
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 70
