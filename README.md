@@ -115,7 +115,7 @@ Array
 ```
 
 ####  Başarısız istek
-```
+```php
 Array
 (
     [code] => 30
