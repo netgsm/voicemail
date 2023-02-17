@@ -211,6 +211,11 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
     <td>Sesli mesaj için yapılan aramada telefoonun çalma süresi. (min 10 - max 30 sn)
    </td>
   </tr>
+    <tr>
+    <td><b> relationid </b> </td>
+    <td>Tarafınızda belirleyeceğiniz bir random sayı ile sesli mesaj başlattığınızda, Raporlama servisini sorguladığınızda relationID bilgisi de dönecektir.
+   </td>
+  </tr>
   
 </table>  
 
