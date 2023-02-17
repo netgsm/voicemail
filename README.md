@@ -229,8 +229,8 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
         $data['relationid']='1234567';
         //$data['baslangicaudioid']=54325324;//baslangicaudioid varsa baslangictext parametresi gönderilmemelidir
         $data['baslangictext']='Merhaba';//baslangictext varsa baslangicaudioid parametresi gönderilmemelidir
-        $data['keyinfo'][0]['tus']=1;
-        $data['keyinfo'][0]['ses']="55156219";
+        $data['keyinfo'][0]['tus']=1;//1 numaralı tuşa basıldığında anlamına gelir
+        $data['keyinfo'][0]['ses']="55156219";//$data['keyinfo'][0]['tus']  parametresinde gönderilen tuşa basıldığında buradaki sesidli ses dinletilir.
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";//text varsa ses parametresini gönderilmemelidir.
         $data['keyinfo'][1]['text']="Merhaba ";//text varsa ses parametresi gönderilmemeilidir.
