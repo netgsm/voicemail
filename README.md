@@ -16,6 +16,7 @@ Netgsm sesli mesaj paket aboneliği bulunan kullanıcılarımız için laravel p
 - [Dinamik Sesli Mesaj Başlatma](#dinamik-sesli-mesaj-başlatma)
 - [Sesli Mesaj İptali](#sesli-mesaj-i̇ptali)
 - [Sesli Mesaj Raporlama](#sesli-mesaj-raporlama)
+- [Sesli Mesaj Webhook](#sesli-mesaj-webhook)
 
 
 # İletişim & Destek
@@ -552,3 +553,60 @@ Array
 </tbody>
 </table>
 
+### Sesli Mesaj Webhook
+
+<ul>
+<li>
+<p>Başlattığınız Sesli mesajın durumunun (rapor olarak düşünebilirsiniz) belirleyeceğiniz bir URL'e  post edilmesini isterseniz, bu yöntemi tercih edebilirsiniz.</p>
+</li>
+<li>
+<p>Bu durumda <strong>Basit</strong> ya da <strong>Dinamik Sesli mesaj Oluşturma</strong> işleminde <code>url</code> paramretresini de POST etmeniz zorunludur.</p>
+</li>
+</ul>
+
+```php
+{
+  "bulkid": 18009xxx,
+  "caller": "312xxxxx9",
+  "callee": "553xxxxxxx",
+  "state": 7,
+  "type": 3,
+  "name": "isim ",
+  "creation_time": "2023-02-22 15:49:03.0",
+  "start_time": "2023-02-22 15:50:09.526",
+  "relationid": "0",
+  "detail": {
+    "push_button": "12",
+    "survey_push_button_desc": "",
+    "survey_taskid": "2131",
+    "record_link": "htps://...."
+  }
+}
+```
+
+##### Laravel kullanıyorsanız veriyi aşağıdaki gibi çekebilirsiniz
+```php
+    use Illuminate\Http\Request;
+    public function index(Request $request)
+    {
+        //
+        $data = json_decode($request->getContent(),false);
+        $data->bulkid;
+        $data->callee;
+        $data->detail->push_button;
+    }
+
+```
+##### Symfony kullanıyorsanız veriyi aşağıdaki gibi çekebilirsiniz
+```php
+    use Symfony\Component\HttpFoundation\Request;
+    public function index(Request $request)
+    {
+     $data = json_decode($request->getContent(),false);
+        $data->bulkid;
+        $data->callee;
+        $data->detail->push_button;
+        
+     }
+
+```
