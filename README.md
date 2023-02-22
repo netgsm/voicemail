@@ -251,6 +251,7 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
         $data['no']=['553xxxxxx'];
         $data['filter']=0;
         $data['ringtime']=20;
+        //$data['url']="http://....";
         $islem=new Package;
         $sonuc=$islem->basitSesliMsg($data);
         dd($sonuc);
