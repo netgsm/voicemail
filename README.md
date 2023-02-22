@@ -5,6 +5,20 @@
 
 Netgsm sesli mesaj paket aboneliği bulunan kullanıcılarımız için laravel paketidir.
 
+
+## İçindekiler
+- [İletişim & Destek](#i̇letişim--destek)
+- [Supported](#Supported-Laravel-Versions)
+- [Kurulum](#kurulum)
+- [Ses Dosyası Yükleme](#ses-dosyası-yükleme)
+- [Ses Dosyası Listeleme](#ses-dosyası-listeleme)
+- [Basit Sesli Mesaj Başlatma](#basit-sesli-mesaj-başlatma)
+- [Dinamik Sesli Mesaj Başlatma](#dinamik-sesli-mesaj-başlatma)
+- [Sesli Mesaj İptali](#sesli-mesaj-i̇ptali)
+- [Sesli Mesaj Raporlama](#sesli-mesaj-raporlama)
+- [Sesli Mesaj Webhook](#sesli-mesaj-webhook)
+
+
 # İletişim & Destek
 
  Netgsm API Servisi ile alakalı tüm sorularınızı ve önerilerinizi teknikdestek@netgsm.com.tr adresine iletebilirsiniz.
@@ -23,6 +37,10 @@ Laravel 6.x, Laravel 7.x, Laravel 8.x, Laravel 9.x,
 ### Supported Symfony Versions
 
 Symfony 4.x, Symfony 5.x, Symfony 6.x
+
+### Supported Lumen Versions
+
+Lumen 6.x, Lumen 7.x, Lumen 8.x, Lumen 9.x, 
 
 ### Supported Php Versions
 
@@ -43,7 +61,7 @@ Sesli mesaj yapacağınız ses dosyasını bu fonksityon ile yükleyebilirsiniz.
 
 Bir dakika içerisinde bir dosya gönderebilirsiniz.
 
-```
+```php
        use Netgsm\Seslimesaj\Package;
        
        $islem=new Package;
@@ -53,7 +71,7 @@ Bir dakika içerisinde bir dosya gönderebilirsiniz.
        die;
 ```
 #### Başarılı istek örnek
-```
+```php
 Array
 (
     [durum] => İşlem başarılı
@@ -62,7 +80,7 @@ Array
 ```
 #### Başarısız istek örnek
 
-```
+```php
 Array
 (
     [durum] => Dosya yolu geçersiz.
@@ -71,13 +89,10 @@ Array
 
 ### Ses Dosyası Listeleme
 
-Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
+Yüklediğiniz ses dosyalarını sorgulayarak bilgisine ulaşabilirsiniz.
 
-```
-        use Netgsm\Seslimesaj\Package;
-       
-        $data['startdate']='260120231500';
-        $data['stopdate']='270120231500';
+```php
+        $data=array('startdate'=>'260120231500','stopdate'=>'270120231500');
         $islem=new Package;
         $sonuc=$islem->seslistele($data);
         dd($sonuc);
@@ -85,7 +100,7 @@ Yüklediğiniz ses dosyalarını sorguyarak bilgisine ulaşabilirsiniz.
 ```
 ####  Başarılı istek
 
-```
+```php
 Array
 (
     [0] => Array
@@ -111,7 +126,7 @@ Array
 ```
 
 ####  Başarısız istek
-```
+```php
 Array
 (
     [code] => 30
@@ -191,7 +206,7 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
   </tr>
        <tr>
     <td><b> $data['keyinfo'][0][ses]  </b> </td>
-    <td>tuşa basılığında bu sesi dinlet anlamına gelir
+    <td>tuşa basılığında bu sesi dinlet anlamına gelir.Daha önceden yüklenmiş ses id si girilmelidir.
    </td>
   </tr>
        </tr>
@@ -210,34 +225,40 @@ Sesli mesaj senaryoları bir adet tuşlama yapacak şekilde gerçekleştirebilir
     <td>Sesli mesaj için yapılan aramada telefoonun çalma süresi. (min 10 - max 30 sn)
    </td>
   </tr>
+    <tr>
+    <td><b> relationid </b> </td>
+    <td>Tarafınızda belirleyeceğiniz bir random sayı ile sesli mesaj başlattığınızda, Raporlama servisini sorguladığınızda relationID bilgisi de dönecektir.
+   </td>
+  </tr>
   
 </table>  
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
         $data['startdate']="06022023";
         $data['starttime']="1606";
         $data['stopdate']="05022023";
         $data['stoptime']="1630";
-        $data['key']=1;
-        $data['relationid']='1234567';
+        $data['key']=1;//ses kaydının sonunda tuşa basılması durumu (0,1)
+        $data['relationid']='1234567';//random olarak girilir
         //$data['baslangicaudioid']=54325324;//baslangicaudioid varsa baslangictext parametresi gönderilmemelidir
         $data['baslangictext']='Merhaba';//baslangictext varsa baslangicaudioid parametresi gönderilmemelidir
-        $data['keyinfo'][0]['tus']=1;
-        $data['keyinfo'][0]['ses']="55156219";
+        $data['keyinfo'][0]['tus']=1;//1 numaralı tuşa basıldığında anlamına gelir
+        $data['keyinfo'][0]['ses']="55156219";//$data['keyinfo'][0]['tus']  parametresinde gönderilen tuşa basıldığında buradaki sesidli ses dinletilir.
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";//text varsa ses parametresini gönderilmemelidir.
         $data['keyinfo'][1]['text']="Merhaba ";//text varsa ses parametresi gönderilmemeilidir.
         $data['no']=['553xxxxxx'];
         $data['filter']=0;
         $data['ringtime']=20;
+        //$data['url']="http://....";
         $islem=new Package;
         $sonuc=$islem->basitSesliMsg($data);
         dd($sonuc);
         die;
 ```
 #### Başarılı istek örnek
-```
+```php
 Array
 (
     [cevap] => İşlem başarılı.
@@ -246,7 +267,7 @@ Array
 )
 ```
 #### Başarısız istek örnek
-```
+```php
 Array
 (
     [code] => 70
@@ -318,7 +339,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
 </tbody>
 </table>
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
         $islem=new Package;
         $data['startdate']="02022023";
@@ -338,12 +359,13 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";
         $data['keyinfo'][1]['text']="Merhaba ";//$data['keyinfo'][1] in tus keyinin valuesi 2 olduğu için 2 ye tıklandığında sesli mesaja çevrilecek metini ifade eder.burada audioid de kullanılabilir.
+        //$data['url']="http://....";
         $sonuc=$islem->dinamikseslimesaj($data);
        dd($sonuc);
        die;
 ```
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 00
@@ -352,7 +374,7 @@ Array
 )
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 70
@@ -366,9 +388,9 @@ Array
 bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen görevid(bulkid) nizdir. İstek yapılırken gönderilmesi zorunludur.
 
 
-```
+```php
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']=175345879;
+        $data['bulkid']=17xxxxx;
         $islem=new Package;
         $sonuc=$islem->iptal($data);
         
@@ -376,17 +398,17 @@ bulkid	:İptal edilmek istenen, sesli mesaj gönderimi yapılırken dönen göre
         die;
 ```
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 200
     [message] => bulkid iptal islemine alindi.
-    [bulkid] => 175577803
+    [bulkid] => 175xxxx
 )
 
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 40
@@ -434,15 +456,11 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 </tbody>
 </table>
 
-```
+```php
        
         use Netgsm\Seslimesaj\Package;
-        $data['bulkid']="1712315";
+        $data=array('bulkid'=>'1712xxxx','bastar'=>'060220230000','bittar'=>'060220232000','type'=>'0','status'=>'1','tus'=>'1');
         // $data['bastar']='060220230000'; //bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
-       //$data['bittar']='060220232000';//bulkid var ise tarih girilmemelidir.tarih girilirse type 2 olmalıdır.
-        $data['type']='0';
-        $data['status']=1;
-        $data['tus']='1';
         $ses=new Package;
         $sonuc=$ses->rapor($data);
         dd($sonuc);
@@ -451,7 +469,7 @@ HTTP Get yöntemini kullanarak; Sesli mesajlarınızı başlattıktan sonra tara
 ```
 
 #### Başarılı istek örnek sonuç
-```
+```php
 Array
 (
     [0] => Array
@@ -472,7 +490,7 @@ Array
  )
 ```
 #### Başarısız istek örnek sonuç
-```
+```php
 Array
 (
     [code] => 70
@@ -537,3 +555,60 @@ Array
 </tbody>
 </table>
 
+### Sesli Mesaj Webhook
+
+<ul>
+<li>
+<p>Başlattığınız Sesli mesajın durumunun (rapor olarak düşünebilirsiniz) belirleyeceğiniz bir URL'e  post edilmesini isterseniz, bu yöntemi tercih edebilirsiniz.</p>
+</li>
+<li>
+<p>Bu durumda <strong>Basit</strong> ya da <strong>Dinamik Sesli mesaj Oluşturma</strong> işleminde <code>url</code> paramretresini de POST etmeniz zorunludur.</p>
+</li>
+</ul>
+
+```php
+{
+  "bulkid": 18009xxx,
+  "caller": "312xxxxx9",
+  "callee": "553xxxxxxx",
+  "state": 7,
+  "type": 3,
+  "name": "isim ",
+  "creation_time": "2023-02-22 15:49:03.0",
+  "start_time": "2023-02-22 15:50:09.526",
+  "relationid": "0",
+  "detail": {
+    "push_button": "12",
+    "survey_push_button_desc": "",
+    "survey_taskid": "2131",
+    "record_link": "htps://...."
+  }
+}
+```
+
+##### Laravel kullanıyorsanız veriyi aşağıdaki gibi çekebilirsiniz
+```php
+    use Illuminate\Http\Request;
+    public function index(Request $request)
+    {
+        //
+        $data = json_decode($request->getContent(),false);
+        $data->bulkid;
+        $data->callee;
+        $data->detail->push_button;
+    }
+
+```
+##### Symfony kullanıyorsanız veriyi aşağıdaki gibi çekebilirsiniz
+```php
+    use Symfony\Component\HttpFoundation\Request;
+    public function index(Request $request)
+    {
+     $data = json_decode($request->getContent(),false);
+        $data->bulkid;
+        $data->callee;
+        $data->detail->push_button;
+        
+     }
+
+```
