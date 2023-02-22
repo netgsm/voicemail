@@ -194,6 +194,7 @@ class Package
         {
             $data['relationid']=rand(100000,999999);
         }
+        
 
         if(empty($data['no']) || !isset($data['no']))
         {
@@ -278,25 +279,50 @@ class Package
             return $response;
         }
 
+        if(isset($data['url']))
+        {
+            $xmlData='<?xml version="1.0"?>
+                <mainbody>
+                <header>
+                <usercode>'.$this->username.'</usercode>
+                <password>'.$this->password.'</password>
+                <startdate>'.$data['startdate'].'</startdate>
+                <starttime>'.$data['starttime'].'</starttime>
+                <stopdate>'.$data['stopdate'].'</stopdate>
+                <stoptime>'.$data['stoptime'].'</stoptime>
+                <key>'.$data['key'].'</key>
+                <ringtime>'.$data['ringtime'].'</ringtime>
+                <url>'.$data['url'].'</url>
+                </header>
+                <body>'
+                .$baslangic.$gsm.$keys.'
 
-        $xmlData='<?xml version="1.0"?>
-       <mainbody>
-       <header>
-       <usercode>'.$this->username.'</usercode>
-       <password>'.$this->password.'</password>
-       <startdate>'.$data['startdate'].'</startdate>
-       <starttime>'.$data['starttime'].'</starttime>
-       <stopdate>'.$data['stopdate'].'</stopdate>
-       <stoptime>'.$data['stoptime'].'</stoptime>
-       <key>'.$data['key'].'</key>
-       <ringtime>'.$data['ringtime'].'</ringtime>
-       </header>
-       <body>'
-       .$baslangic.$gsm.$keys.'
+
+                </body>
+                </mainbody>';
+        }
+        else{
+            $xmlData='<?xml version="1.0"?>
+            <mainbody>
+            <header>
+            <usercode>'.$this->username.'</usercode>
+            <password>'.$this->password.'</password>
+            <startdate>'.$data['startdate'].'</startdate>
+            <starttime>'.$data['starttime'].'</starttime>
+            <stopdate>'.$data['stopdate'].'</stopdate>
+            <stoptime>'.$data['stoptime'].'</stoptime>
+            <key>'.$data['key'].'</key>
+            <ringtime>'.$data['ringtime'].'</ringtime>
+            </header>
+            <body>'
+            .$baslangic.$gsm.$keys.'
 
 
-       </body>
-       </mainbody>';
+            </body>
+            </mainbody>';
+        }
+        
+        
 
 
 
@@ -576,6 +602,8 @@ class Package
             $response['durum']='key değerini istenilen biçimde giriniz.key=1 Ses kaydının sonunda tuşa basılmasını istiyorum. key=0	Ses kaydının sonunda tuşa basılmasını istemiyorum. ';
             return $response;
         }
+        if(isset($data['url']))
+        {
         $xmlData="<?xml version='1.0' encoding='UTF-8'?>
             <mainbody>
             <header>
@@ -587,6 +615,7 @@ class Package
                 <stoptime>".$data['stoptime']."</stoptime>
                 <ringtime>30</ringtime>
                 <key>1</key>
+                <url>".$data['url']."</url>
             </header>
             <body>
             <voicemail>
@@ -600,7 +629,35 @@ class Package
             </voicemail>
             </body>
             </mainbody>";
-
+        }
+        else{
+            {
+                $xmlData="<?xml version='1.0' encoding='UTF-8'?>
+                    <mainbody>
+                    <header>
+                        <usercode>".$this->username."</usercode>
+                        <password>".$this->password."</password>
+                        <startdate>".$data['startdate']."</startdate>
+                        <starttime>".$data['starttime']."</starttime>
+                        <stopdate>".$data['stopdate']."</stopdate>
+                        <stoptime>".$data['stoptime']."</stoptime>
+                        <ringtime>30</ringtime>
+                        <key>1</key>
+                    </header>
+                    <body>
+                    <voicemail>
+                        <scenario>
+                            ".$series."
+                            <number>
+                                ".$gsm."
+                            </number>
+                            ".$keys."
+                        </scenario>
+                    </voicemail>
+                    </body>
+                    </mainbody>";
+                }
+        }
             $ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL,'https://api.netgsm.com.tr/voicesms/send');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,2);
