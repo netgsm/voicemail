@@ -358,6 +358,7 @@ Senaryonuza göre sırası belirlenmiş şekilde gönderdiğiniz yüklü ses dos
         $data['keyinfo'][1]['tus']=2;
        // $data['keyinfo'][1]['ses']="55156219";
         $data['keyinfo'][1]['text']="Merhaba ";//$data['keyinfo'][1] in tus keyinin valuesi 2 olduğu için 2 ye tıklandığında sesli mesaja çevrilecek metini ifade eder.burada audioid de kullanılabilir.
+        //$data['url']="http://....";
         $sonuc=$islem->dinamikseslimesaj($data);
        dd($sonuc);
        die;
