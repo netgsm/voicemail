@@ -92,6 +92,7 @@ Array
 Yüklediğiniz ses dosyalarını sorgulayarak bilgisine ulaşabilirsiniz.
 
 ```php
+        use Netgsm\Seslimesaj\Package;
         $data=array('startdate'=>'260120231500','stopdate'=>'270120231500');
         $islem=new Package;
         $sonuc=$islem->seslistele($data);
