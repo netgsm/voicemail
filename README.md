@@ -12,7 +12,7 @@ Netgsm sesli mesaj paket aboneliği bulunan kullanıcılarımız için laravel p
 - [Kurulum](#kurulum)
 - [Ses Dosyası Yükleme](#ses-dosyası-yükleme)
 - [Ses Dosyası Listeleme](#ses-dosyası-listeleme)
-- [Ses Mesaj Başlatma](#sesli-mesaj-başlatma)
+- [Basit Ses Mesaj Başlatma](#sesli-mesaj-başlatma)
 - [Dinamik Sesli Mesaj Başlatma](#dinamik-sesli-mesaj-başlatma)
 - [Sesli Mesaj İptali](#sesli-mesaj-i̇ptali)
 - [Sesli Mesaj Raporlama](#sesli-mesaj-raporlama)
