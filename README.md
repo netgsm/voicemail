@@ -567,6 +567,86 @@ Array
 </li>
 </ul>
 
+
+<table>
+<thead>
+<tr>
+<th>Değişken</th>
+<th>Anlamı</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bulkid</code></td>
+<td>Başlatılan sesli mesaj görevID</td>
+</tr>
+<tr>
+<td><code>caller</code></td>
+<td>Arayanın numarası</td>
+</tr>
+<tr>
+<td><code>callee</code></td>
+<td>Arananın numarası</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>Çağrının gerçekleşme durumudur. ( 1: Cevaplananlar, 2: Cevaplanmayan, 3: Ulaşılamayan, 7: Meşgule Alınan )</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Sesli Mesajın tipi (1: Sadece belirlenmiş ses kaydı dinlet, 2: Belirlenmiş ses kaydını dinlet ve sonrasından ses kaydı al, 3: Belirlenmiş ses kaydını dinlet ve tuş bilgisi al, 4: Belirlenmiş ses kaydını dinlet ve tuş bilgisi al)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Arananın Adı Soyadı bilgisi</td>
+</tr>
+<tr>
+<td><code>creation_time</code></td>
+<td>İşin oluşturulma zamanı ( yyyy-MM-dd HH:mm:ss.SSS )</td>
+</tr>
+<tr>
+<td><code>start_time</code></td>
+<td>Çağrının başlatılma zamanı ( yyyy-MM-dd HH:mm:ss.SSS )</td>
+</tr>
+<tr>
+<td><code>answer_time</code></td>
+<td>Çağrının cevaplanma zamanı ( yyyy-MM-dd HH:mm:ss.SSS ) "Açan" durumu için</td>
+</tr>
+<tr>
+<td><code>hangup_time</code></td>
+<td>Cevaplanan çağrının kapanma zamanı ( yyyy-MM-dd HH:mm:ss.SSS ) "Açan" durumu için</td>
+</tr>
+<tr>
+<td><code>bilsec</code></td>
+<td>Görüşme süresi, "Açan" durumu için</td>
+</tr>
+<tr>
+<td><code>relationid</code></td>
+<td>İşleri gruplandırmak için kullanılan değer.</td>
+</tr>
+<tr>
+<td><code>detail</code></td>
+<td>Çağrılar hakkında tiplerine göre daha detaylı bilgi içeren objedir.</td>
+</tr>
+<tr>
+<td><code>push_button</code></td>
+<td>Tuşlamalı sesli mesajlarda tuşlama bilgisidir ( NULL: sesi dinleyip tuşlamaya kalmadan ayrılanlar, -1: Sesi dinleyip tuşlamaya kalıp belirlenen sürede tuşlama yapmayanlar type: 4 olanlar için  type: 3 veya type: 4 olan işlerde</td>
+</tr>
+<tr>
+<td><code>survey_push_button_desc</code></td>
+<td>Anketlerde basılan tuşun açıklamasıdır.type = 3 olan işlerde</td>
+</tr>
+<tr>
+<td><code>survey_taskid</code></td>
+<td>Anketlerde basılan tuş için belirlenmiş görev(0: Görev atanmamış, 1: Çağrı kapansın, 2: İlk dinletilen ses kaydını tekrar dinlet, 3: Yeni bir ses kaydı dinlet, 4: Yeni ses kaydını dinlet sonrasında ses kaydını al).  type =3 olan işlerde</td>
+</tr>
+<tr>
+<td><code>record_link</code></td>
+<td>Aranandan ses kaydı alındığı durumlarda ses kaydını indiren link  type = 3 ve taskid = 4 olanlar veya type = 2 olanlar</td>
+</tr>
+</tbody>
+</table>  
+
 ```php
 {
   "bulkid": 18009xxx,
